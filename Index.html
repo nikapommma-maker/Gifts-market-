@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GIFTS MARKET</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#090711;color:#fff;font-family:Arial,sans-serif}
+.app{max-width:480px;margin:auto;min-height:100vh;padding:22px 17px 95px;background:radial-gradient(ellipse at 50% 0%,#38205c 0%,#100c1b 42%,#090711 80%)}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}
+.logo{font-size:20px;font-weight:900;letter-spacing:2px}
+.logo span{color:#d5ae68}
+.avatar{width:42px;height:42px;border-radius:50%;background:#302044;border:1px solid #9d75c7;display:grid;place-items:center}
+.welcome{color:#aaa;font-size:13px}
+h1{font-size:29px;margin:7px 0 20px}
+.balance{background:linear-gradient(120deg,#35204e,#171122);border:1px solid #74518d;border-radius:20px;padding:20px;margin-bottom:24px}
+.balance small{color:#c3b4d0}
+.amount{font-size:32px;font-weight:800;margin:12px 0}
+.gold{color:#e7bd75}
+.section{display:flex;justify-content:space-between;align-items:center;margin:25px 0 13px}
+.section h2{font-size:18px;margin:0}
+.card{background:#171321;border:1px solid #30263e;border-radius:17px;padding:16px;margin-bottom:12px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.gift{text-align:center;padding:17px 10px}
+.gift .pic{font-size:43px;margin-bottom:10px}
+.gift b{display:block;margin-bottom:7px}
+.gift small{color:#b8a7c7}
+button{border:0;border-radius:12px;padding:12px 15px;background:linear-gradient(110deg,#d9b16c,#a8793f);color:#17101e;font-weight:800;width:100%;margin-top:12px}
+.secondary{background:#2a2036;color:#fff}
+.nav{position:fixed;bottom:0;left:0;right:0;max-width:480px;margin:auto;background:#15101f;border-top:1px solid #392b49;display:flex;justify-content:space-around;padding:12px 5px calc(12px + env(safe-area-inset-bottom))}
+.nav button{background:none;color:#a99bb8;width:25%;margin:0;padding:5px 0;font-size:11px}
+.nav button.active{color:#e8bd77}
+.page{display:none}.page.active{display:block}
+.muted{color:#a99bb8;font-size:13px;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top">
+<div class="logo">GIFTS <span>MARKET</span></div>
+<div class="avatar">👤</div>
+</header>
+
+<section id="home" class="page active">
+<div class="welcome">РАДЫ ТЕБЯ ВИДЕТЬ</div>
+<h1>Добро пожаловать!</h1>
+<div class="balance">
+<small>ТВОЙ ВНУТРЕННИЙ БАЛАНС</small>
+<div class="amount"><span class="gold">⭐</span> <span id="balance">250</span></div>
+<small>Бонусные баллы проекта</small>
+</div>
+<div class="section"><h2>Быстрый доступ</h2></div>
+<div class="grid">
+<div class="card"><div style="font-size:27px">🎁</div><b>Каталог</b><div class="muted">Выбери подарок</div><button onclick="showPage('shop')">Открыть</button></div>
+<div class="card"><div style="font-size:27px">🎯</div><b>Бонус дня</b><div class="muted">Получай баллы</div><button onclick="bonus()">Получить</button></div>
+</div>
+<div class="section"><h2>О проекте</h2></div>
+<div class="card muted">GIFTS MARKET — площадка для просмотра каталога подарков и оформления заявок.</div>
+</section>
+
+<section id="shop" class="page">
+<h1>🎁 Каталог</h1>
+<p class="muted">Выбери понравившийся подарок.</p>
+<div class="grid">
+<div class="card gift"><div class="pic">🧸</div><b>Плюшевый мишка</b><small>От 100 ⭐ баллов</small><button onclick="order('Плюшевый мишка')">Подробнее</button></div>
+<div class="card gift"><div class="pic">🌹</div><b>Роза</b><small>От 50 ⭐ баллов</small><button onclick="order('Роза')">Подробнее</button></div>
+<div class="card gift"><div class="pic">🎂</div><b>Торт</b><small>От 150 ⭐ баллов</small><button onclick="order('Торт')">Подробнее</button></div>
+<div class="card gift"><div class="pic">💎</div><b>Кристалл</b><small>От 200 ⭐ баллов</small><button onclick="order('Кристалл')">Подробнее</button></div>
+</div>
+</section>
+
+<section id="profile" class="page">
+<h1>👤 Профиль</h1>
+<div class="card">
+<div class="muted">ПОЛЬЗОВАТЕЛЬ</div>
+<h2 id="username">Гость</h2>
+<div class="muted">Твой внутренний баланс</div>
+<div class="amount gold">⭐ <span id="profileBalance">250</span></div>
+</div>
+<div class="card muted">Данные профиля будут загружаться из Telegram после подключения серверной части.</div>
+</section>
+
+<section id="tasks" class="page">
+<h1>🎯 Задания</h1>
+<div class="card"><b>Ежедневный бонус</b><p class="muted">Заглядывай каждый день за бонусными баллами.</p><button onclick="bonus()">Получить бонус</button></div>
+<div class="card"><b>Приглашение друзей</b><p class="muted">Раздел реферальной программы появится после подключения бота.</p></div>
+</section>
+</div>
+
+<nav class="nav">
+<button class="active" onclick="showPage('home',this)">⌂<br>Главная</button>
+<button onclick="showPage('shop',this)">🎁<br>Каталог</button>
+<button onclick="showPage('tasks',this)">🎯<br>Задания</button>
+<button onclick="showPage('profile',this)">👤<br>Профиль</button>
+</nav>
+
+<script>
+let balance=250;
+const tg=window.Telegram?.WebApp;
+if(tg){tg.ready();tg.expand();}
+function showPage(id,btn){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+if(btn)btn.classList.add('active');
+else document.querySelectorAll('.nav button')[0].classList.add('active');
+}
+function updateBalance(){
+document.getElementById('balance').textContent=balance;
+document.getElementById('profileBalance').textContent=balance;
+}
+function bonus(){
+alert('Бонусная функция пока демонстрационная. Сервер ещё не подключён.');
+}
+function order(name){
+alert('Вы выбрали: '+name+'. Оформление заявок подключим позже.');
+}
+const user=tg?.initDataUnsafe?.user;
+if(user){
+document.getElementById('username').textContent=user.first_name||'Пользователь';
+}
+</script>
+</body>
+  </html>
+  
